@@ -19,14 +19,9 @@ class MovimientoController extends Controller
     
     }
 
-    public function create()
-    {
-        return view('tran.movimiento.index' , compact('movimientos')); 
-    }
-
     public function store(Request $request)
     {
-        request->validate([
+        $request->validate([
             'factura'=> 'required|string',
             'cotizacion'=> 'nullable|string',
             'lote'=> 'nullable|string',

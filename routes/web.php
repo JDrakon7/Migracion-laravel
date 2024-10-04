@@ -6,6 +6,7 @@ use App\Http\Controllers\ConstanteController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\InboxController;
 use App\Http\Controllers\KardexController;
+use App\Http\Controllers\OrdenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,8 @@ Route::get('/', function () {
     Route::get('/inventario/buscar', [InventarioController::class, 'search'])->name('inventario.search');
 
     Route::get('/kardex', [KardexController::class, 'index'])->name('kardex.index');
+
+    Route::resource('ordenes', OrdenController::class);
 
 
     return view('welcome');
