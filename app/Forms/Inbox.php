@@ -4,6 +4,8 @@ namespace App\Forms;
 
 use Serializable;
 
+
+
 class Inbox implements Serializable
 
 {

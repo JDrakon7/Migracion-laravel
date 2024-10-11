@@ -48,4 +48,32 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        // Manejando errores personalizados como en el Handler de PHP puro
+
+        // Error deprecado del usuario
+        if ($exception instanceof \ErrorException && $exception->getSeverity() === E_USER_DEPRECATED) {
+            return response()->json([
+                'message' => 'Se ha detectado una funcionalidad obsoleta.',
+            ], 400);
+        }
+
+        // Advertencia de usuario
+        if ($exception instanceof \ErrorException && $exception->getSeverity() === E_USER_WARNING) {
+            return response()->json([
+                'message' => 'Advertencia del usuario: se ha detectado un problema.',
+            ], 400);
+        }
+
+        // Capturar errores de tipo "notice"
+        if ($exception instanceof \ErrorException && $exception->getSeverity() === E_USER_NOTICE) {
+            return response()->json([
+                'message' => 'Aviso del sistema: acción notificada.',
+            ], 200);
+        }
+
+        return parent::render($request, $exception); // Dejar que Laravel maneje otras excepciones
+    }
 }

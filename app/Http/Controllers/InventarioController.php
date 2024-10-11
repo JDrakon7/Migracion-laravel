@@ -38,7 +38,7 @@ class InventarioController extends Controller
             'campo'=> 'nullable|array',
         ]);
 
-        Inventario::create($validateData);
+        Inventario::create($validatedData);
 
         return redirect()->route('inventario.index')->with('success','Producto creado exitosamente');
 

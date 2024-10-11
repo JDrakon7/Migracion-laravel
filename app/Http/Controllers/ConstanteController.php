@@ -23,7 +23,11 @@ class ConstanteController extends Controller
     {
         $validateData = $request->validate([   
             'nombre'=> 'required|string|max:255',
-            'descripcion'=> 'nullable|string'
+            'descripcion'=> 'nullable|string',
+            'valor' => 'required',
+            'descripcion'=> 'nullable|string',
+            'habilitado' => 'boolean',
+            'seleccionado' => 'boolean',
             ]);
 
             Constante::create($validateData);
@@ -48,8 +52,12 @@ class ConstanteController extends Controller
     public function update(Request $request, $id)   
     {
         $validateData = $request->validate([
+           'codigo' => 'required|string|max:255',
             'nombre'=> 'required|string|max:255',
-            'descripcion'=> 'nullable|string'
+            'valor' => 'required',
+            'descripcion'=> 'nullable|string',
+            'habilitado' => 'boolean',
+            'seleccionado' => 'boolean',
         ]);
 
         $constante = Constante::findOrFail($id);
@@ -66,6 +74,17 @@ class ConstanteController extends Controller
 
         return redirect()->route('constantes.index')->with('success', 'Constante eliminada exitosamente');
     }
-}
+
+
+    public function getInboxHtmlDataTable(Request $request)
+    {
+        $datos = $request->input('datos');
+        $constantes = Constante::whereIn('id' , $datos)->get();
+
+        $html = view('constante.patrials.inbox_table' , compact ('constantes'))->render();
+
+        return response()->json(['html' => $html]);
+    }
+}   
 
     

@@ -12,7 +12,7 @@ class KardexAparta extends Model
     Protected $table = 'iv_kardex_apartado';
 
     protected $fillable = [
-        'estado',
+       'estado',
         'nombreProductivo',
         'imagen',
         'cantidad',

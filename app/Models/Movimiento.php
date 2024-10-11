@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movimiento extends Model
 {
+    protected $table = 'iv_movimiento';
+
      protected $fillable = [
         "factura",
         "cotizacion",

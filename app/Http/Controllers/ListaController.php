@@ -2,54 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Lista;
+use Illuminate\Http\Request;
 
 class ListaController extends Controller
 {
-    protected $table = "iv_lista";
-
-    protected $fillable = [
-        "idLista",
-        "codigo",
-        "nombre",
-        "descripcion",
-        "habilitado",
-        "seleccionado",
-        "boton",
-        "campo",
-        "posicionHorizontal",
-        "posicionVertical"
-    ];
-
-    protected $casts = [
-        "habilitado" => "boolean",
-        "seleccionado" => "boolean"
-    ];
-
-    protected $appends = ['boton', 'campo'];
-
-
-    protected function getBotonAttribute()
+    public function index()
     {
-        return [
-            'cmd_guardar' => '1',
-            'cmd_modificar' => '',
-            'cmd_eliminar' => '',
-            'cmd_cancelar' => '1',
-
-        ];
+        $listas = Lista::all();
+        return response()->json($listas);
     }
 
-    public function getCampoAttribute()
+    public function show($id)
     {
-        return [
-            'id' => $this->id,
-            'idLista' => $this->idLista,
-            'codigo' => $this->codigo,
-            'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion,
-            'habilitado' => $this->habilitado,
-        ];
+        $lista = Lista::findOrFail($id);
+        return response()->json($lista);
+    }
+
+    public function store(Request $request)
+    {
+        $lista = Lista::create($request->all());
+        return response()->json($lista, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $lista = Lista::findOrFail($id);
+        $lista->update($request->all());
+        return response()->json($lista);
+    }
+
+    public function destroy($id)
+    {
+        Lista::destroy($id);
+        return response()->json(null, 204);
     }
 }

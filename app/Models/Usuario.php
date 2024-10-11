@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;    
+use App\Models\Cargo;
 
 class Usuario extends Model
 {
+    use HasFactory;
+
     protected $table =  "iv_usuario";
 
     protected $fillable = [
@@ -40,15 +44,15 @@ class Usuario extends Model
         'campo' => ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'],
     ];
 
-    // public function setClavevAttribute($value)
-    // {
-    //     $this->attributes['clave'] = Hash::make($value);
-    // }
+    public function setClavevAttribute($value)
+    {
+        $this->attributes['clave'] = Hash::make($value);
+    }
 
-    // public function cargo()
-    // {
-    //     return $this->belongsTo(Cargo::class, 'id_cargo');
-    // }
+    public function cargo()
+    {
+        return $this->belongsTo(Cargo::class, 'id_cargo');
+    }
 
     
 public function getNavBarNotificaciones() {
